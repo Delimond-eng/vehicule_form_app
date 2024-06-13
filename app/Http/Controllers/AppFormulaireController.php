@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVehiculeRequest;
 use App\Models\Achat;
 use App\Models\Modele;
-use App\Models\vehiculeType;
 use App\Models\Proprietaire;
 use App\Models\Vehicule;
+use App\Models\VehiculeType;
 use Illuminate\Http\Request;
 
 class AppFormulaireController extends Controller
