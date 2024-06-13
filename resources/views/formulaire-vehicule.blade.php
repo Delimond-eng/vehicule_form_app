@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="photo-picker" id="photo-picker3" style="position: relative;">
-                                            <small>Profil vehicule gauche</small>
+                                            <small>Profil vehicule droit</small>
                                             <video id="video-preview3" style="border-radius: 5px; position: relative; cursor: pointer;" height="150" class="d-none img-fluid" autoplay></video>
                                             <img id="photo-preview3" style="border-radius: 5px; position: relative; width: 100%; cursor: pointer;" height="150" class="img-fluid" src="{{ asset('assets/img/camera-placeholder.jpg') }}">
 
@@ -83,7 +83,7 @@
                                             <label for="photo3" class="btn btn-outline-dark btn-sm w-100 mt-1">
                                                 <i class="icon-attach-4 mr-1"></i>Charger photo
                                             </label>
-                                            <input type="file" id="photo3" name="profil_gauche" style="visibility: hidden">
+                                            <input type="file" id="photo3" name="profil_droit" style="visibility: hidden">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -98,7 +98,7 @@
                                             <label for="photo4" class="btn btn-outline-dark btn-sm w-100 mt-1">
                                                 <i class="icon-attach-4 mr-1"></i>Charger photo
                                             </label>
-                                            <input type="file" id="photo4" name="profil_droit" style="visibility: hidden">
+                                            <input type="file" id="photo4" name="profil_gauche" style="visibility: hidden">
                                         </div>
                                     </div>
 
@@ -165,8 +165,9 @@
                                         <div class="form-group">
                                             <label for="typeUsageVehicule">Type Usage *</label>
                                             <select class="form-control" id="typeUsageVehicule" name="type_usage" required>
-                                                <option >Personnel</option>
-                                                <option >Taxi</option>
+                                                <option value="" selected hidden>Sélectionnez un type d'usage</option>
+                                                <option value="Personnel">Personnel</option>
+                                                <option value="Taxi">Taxi</option>
                                                 <!-- Options dynamiques -->
                                             </select>
                                         </div>
@@ -261,87 +262,53 @@
 
 @section("scripts")
 <script src="{{asset('assets/js/app.js') }}"></script>
- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @if(session('code'))
-            const code = '{{ session('code') }}';
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    @if (session('code'))
+        const code ="{{ session('code') }}";
             Swal.fire({
                 title: 'Veuillez imprimer le qrcode !',
-                html: `<div id="qrcode"></div><br><p>${code}</p>`,
+                html: `<div id="qrcode"></div><br><h1 style="color:#007fff">${code}</h1>`,
                 showCancelButton: true,
                 confirmButtonText: 'Imprimer',
                 cancelButtonText: 'Fermer',
                 didOpen: () => {
                     // Générer le QR code
-                    const qrCode = new QRCodeStyling({
-                        width: 500,
-                        height: 500,
+                    var qrCode = new QRCodeStyling({
+                        width: 350,
+                        height: 350,
                         data: code,
-                        image: "https://example.com/path/to/your/image.png", // Replace with your image URL
+                        image: "{{ asset('assets/img/drc.svg') }}",
                         dotsOptions: {
-                            color: "#007fff", // Blue color for dots
+                            color: "#0026FF", // Blue color for dots
                             type: "rounded"
                         },
                         backgroundOptions: {
-                            color: "#ffffff", // Background color
+                            color: "#FFFFFF", // Background color
                         },
                         imageOptions: {
                             crossOrigin: "anonymous",
-                            margin: 20
+                            margin: 5
                         }
                     });
                     qrCode.append(document.getElementById("qrcode"));
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    printQRCode(code);
+                    // Ouvrir une nouvelle fenêtre pour l'impression
+                    var printWindow = window.open(`/print/${code}`, '_blank');
+                    // Ajouter un listener pour détecter la fermeture de la fenêtre
+                    var timer = setInterval(function() {
+                        if (printWindow.closed) {
+                            clearInterval(timer);
+                            // Rediriger vers la page d'accueil après l'impression
+                            window.location.href = "/";
+                        }
+                    }, 1000);
                 }
             });
-
-            function printQRCode(code) {
-                // Crée une nouvelle fenêtre pour l'impression
-                const printWindow = window.open('', '_blank');
-                printWindow.document.write(`
-                    <html>
-                    <head>
-                        <title>Impression QR Code</title>
-                    </head>
-                    <body>
-                        <div id="qrcode"></div><br>
-                        <p>${code}</p>
-                        <script src="https://cdn.jsdelivr.net/npm/qrcode-styling@1.5.0/lib/qrcode.min.js"></script>
-                        <script>
-                            const qrCode = new QRCodeStyling({
-                                width: 300,
-                                height: 300,
-                                data: "${code}",
-                                image: "https://example.com/path/to/your/image.png", // Replace with your image URL
-                                dotsOptions: {
-                                    color: "#0000FF", // Blue color for dots
-                                    type: "rounded"
-                                },
-                                backgroundOptions: {
-                                    color: "#ffffff", // Background color
-                                },
-                                imageOptions: {
-                                    crossOrigin: "anonymous",
-                                    margin: 20
-                                }
-                            });
-                            qrCode.append(document.getElementById("qrcode"));
-                            window.onload = function() {
-                                window.print();
-                                window.onafterprint = function() {
-                                    window.close();
-                                }
-                            }
-                        </script>
-                    </body>
-                    </html>
-                `);
-                printWindow.document.close();
-            }
-        @endif
-    });
+    @endif
+});
 </script>
 @endsection

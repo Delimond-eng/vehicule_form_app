@@ -26,15 +26,13 @@ class AppFormulaireController extends Controller
             $photoGauche = $this->savePhoto($request, 'profil_gauche');
             $photoDroit = $this->savePhoto($request, 'profil_droit');
             // Create vehicule
-            $vehiculeData = array_merge($validatedData, [
-                'photo_avant' => $photoAvant,
-                'photo_arriere' => $photoArriere,
-                'profil_droit' => $photoDroit,
-                'profil_gauche' => $photoGauche,
-            ]);
-            $vehiculeData['proprietaire_id'] = $proprietaire->id;
-            $vehiculeData['code'] = Vehicule::generateUniqueCode();
-            $vehicule = Vehicule::create($vehiculeData);
+            $validatedData['photo_avant'] = $photoAvant;
+            $validatedData['photo_arriere'] = $photoArriere;
+            $validatedData['profil_droit'] = $photoDroit;
+            $validatedData['profil_gauche'] = $photoGauche;
+            $validatedData['proprietaire_id'] = $proprietaire->id;
+            $validatedData ['code'] = Vehicule::generateUniqueCode();
+            $vehicule = Vehicule::create($validatedData);
             // Create achat info
             if($vehicule){
                 $achatData = $validatedData['achat'];
@@ -70,7 +68,7 @@ class AppFormulaireController extends Controller
         if ($request->hasFile($param)) {
                 $domain = $request->getHttpHost();
                 $image = $request->file($param);
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('uploads/vehicules'), $imageName);
                 $path = 'http://' . $domain . '/uploads/vehicules/' . $imageName;
             return $path;

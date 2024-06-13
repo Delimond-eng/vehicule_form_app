@@ -18,3 +18,6 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::get('/',[AppFormulaireController::class, 'gotoView'])->name('home');
 Route::post('/store',[AppFormulaireController::class, 'store'])->name('vehicule.store');
+Route::get('/print/{code}', function ($code) {
+    return view('printing.qrcode', ['code'=> $code]);
+});

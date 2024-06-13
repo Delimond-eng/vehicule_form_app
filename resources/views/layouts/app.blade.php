@@ -221,6 +221,7 @@
 
 	<!-- SPECIFIC SCRIPTS -->
 	<script src="{{ asset('assets/js/parallax.min.js') }}"></script>
+    <script src="{{ asset('assets/js/qrcode_styling.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert2/sweetalert2.min.js') }}"></script>
     @yield('scripts')
 </body>
