@@ -4,19 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Modele extends Model
+class Marque extends Model
 {
     use HasFactory;
 
-
-     /**
+      /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'modeles';
+    protected $table = 'marques';
 
     /**
      * The primary key for the model.
@@ -31,8 +29,7 @@ class Modele extends Model
      * @var array
      */
     protected $fillable = [
-        'modele_libelle',
-        'vehicule_type_id',
+        'marque_libelle',
     ];
 
     /**
@@ -64,13 +61,4 @@ class Modele extends Model
         'created_at',
         'updated_at',
     ];
-
-
-    /**
-     * Summary of moto
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function vehiculeType() :BelongsTo{
-        return $this->belongsTo(VehiculeType::class, foreignKey:'vehicule_type_id');
-    }
 }

@@ -37,6 +37,7 @@ class Vehicule extends Model
         'plaque',
         'chassis',
         'marque',
+        'modele',
         'couleur',
         'photo_avant',
         'photo_arriere',
@@ -48,7 +49,7 @@ class Vehicule extends Model
         'police_assurance',
         'type_usage',
         'vehicule_type_id',
-        'modele_id',
+        'marque_id',
         'proprietaire_id',
     ];
 

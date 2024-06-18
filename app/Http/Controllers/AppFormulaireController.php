@@ -4,17 +4,58 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVehiculeRequest;
 use App\Models\Achat;
+use App\Models\Assurance;
+use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Proprietaire;
+use App\Models\TypeAssurance;
 use App\Models\Vehicule;
 use App\Models\VehiculeType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AppFormulaireController extends Controller
 {
-    public function store(StoreVehiculeRequest $request)
+    public function store(Request $request)
     {
-        $validatedData = $request->validated();
+        // Validation des données
+        $validator = Validator::make($request->all(), [
+            'serie' => 'required|string|unique:vehicules,serie',
+            'plaque' => 'required|string|unique:vehicules,plaque',
+            'marque_id' => 'required|int|exists:marques,id',
+            'chassis' => 'required|string',
+            'modele' => 'required|string',
+            'photo_avant' => 'required|file',
+            'photo_arriere' => 'required|file',
+            'profil_droit' => 'required|file',
+            'profil_gauche' => 'required|file',
+            'nbre_chevaux' => 'required|string',
+            'date_debut_service' => 'required|date',
+            'assurances'=> 'nullable|array',
+            'assurances.*.numero_police'=> 'required|string',
+            'assurances.*.nom_assureur'=> 'required|string',
+            'assurances.*.date_validite'=> 'required|date',
+            'assurances.*.type_assurance_id'=> 'required|int|exists:type_assurances,id',
+            'type_usage' => 'required|string',
+            'couleur' => 'required|string',
+            'vehicule_type_id' => 'required|int|exists:vehicule_types,id',
+            'proprietaire.nip_proprietaire' => 'required|string',
+            'proprietaire.nip_chauffeur' => 'required|string',
+            'achat.achat_prix' => 'required|string',
+            'achat.devise' => 'required|string',
+            'achat.achat_date' => 'required|date',
+            'achat.nom_vendeur' => 'required|string',
+            'achat.telephone_vendeur' => 'required|string',
+            'achat.email_vendeur' => 'nullable|email',
+            'achat.adresse_vendeur' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()->all(),
+            ]);
+        }
+        $validatedData = $validator->validate();
         //create proprietaire
         $proprietaireData = $validatedData['proprietaire'];
         $proprietaire = Proprietaire::create($proprietaireData);
@@ -32,22 +73,36 @@ class AppFormulaireController extends Controller
             $validatedData['profil_gauche'] = $photoGauche;
             $validatedData['proprietaire_id'] = $proprietaire->id;
             $validatedData ['code'] = Vehicule::generateUniqueCode();
+
             $vehicule = Vehicule::create($validatedData);
             // Create achat info
             if($vehicule){
                 $achatData = $validatedData['achat'];
                 $achatData['nip_acheteur'] = $proprietaire->nip_proprietaire;
                 $achatData['vehicule_id'] = $vehicule->id;
+                $achatData['vehicule_npi'] = $vehicule->code;
                 Achat::create($achatData);
-                return back()->with([
+                $assurances = $validatedData['assurances'];
+                foreach ($assurances as $assure) {
+                    $assure["vehicule_id"] = $vehicule->id;
+                    $assure["vehicule_npi"] = $vehicule->code;
+                    Assurance::create($assure);
+                }
+                return response()->json([
                     'success' => 'Données enregistrées avec succès!',
-                    'code'=>$vehicule->code
+                    'code'=>$vehicule->code,
+                    'type_use'=>$vehicule->type_usage,
                 ]);
             }
-            return back()->with('error', 'l\'enregistrement n\'est pas terminé correctement');
+            return response()->json([
+                'error' =>  'l\'enregistrement n\'est pas terminé correctement',
+            ]);
+
 
         } else {
-            return back()->with('error', 'Echec de l\'enregistrement des données!');
+             return response()->json([
+                'error' =>  'l\'enregistrement n\'est pas terminé correctement',
+            ]);
         }
     }
 
@@ -55,11 +110,13 @@ class AppFormulaireController extends Controller
 
     public function gotoView()
     {
-        $models = Modele::where('status', 'actif')->get();
+        $brands = Marque::all();
         $vehiculeTypes = VehiculeType::where('status','actif')->get();
+        $assuranceTypes = TypeAssurance::all();
         return view('formulaire-vehicule', [
             'vehiculeTypes'=> $vehiculeTypes,
-            'modeles'=> $models,
+            'typeAssurances'=> $assuranceTypes,
+            'marques'=> $brands,
         ]);
     }
 

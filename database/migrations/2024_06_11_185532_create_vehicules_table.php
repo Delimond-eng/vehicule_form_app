@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('plaque');
             $table->string('couleur');
             $table->string('chassis');
-            $table->string('marque');
+            $table->string('modele');
             $table->string('photo_avant');
             $table->string('photo_arriere');
             $table->string('profil_droit');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('police_assurance')->nullable();
             $table->string('type_usage');
             $table->unsignedBigInteger('vehicule_type_id');
-            $table->unsignedBigInteger('modele_id');
+            $table->unsignedBigInteger('marque_id');
             $table->unsignedBigInteger('proprietaire_id');
             $table->string('status')->default('actif');
             $table->timestamps();

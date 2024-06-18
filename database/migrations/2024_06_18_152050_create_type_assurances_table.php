@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('modeles', function (Blueprint $table) {
+        Schema::create('type_assurances', function (Blueprint $table) {
             $table->id();
-            $table->string('modele_libelle');
-            $table->string('status')->default('actif');
-            $table->unsignedBigInteger("vehicule_type_id");
+            $table->string('type_assurance_libelle');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modeles');
+        Schema::dropIfExists('type_assurances');
     }
 };

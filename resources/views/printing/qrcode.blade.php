@@ -21,7 +21,7 @@
             margin-bottom: 0px;
         }
         h1 {
-            color: #0026FF;
+            color: #000000;
             text-align: center;
             font-family: 'Poppins';
             font-size: 85px;
@@ -42,7 +42,7 @@
                 data: code,
                 image: "{{ asset('assets/img/drc.svg') }}",
                 dotsOptions: {
-                    color: "#0026FF",
+                    color: "#0080ff",
                     type: "rounded"
                 },
                 backgroundOptions: {

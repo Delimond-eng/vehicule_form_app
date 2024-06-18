@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Achat extends Model
+class Assurance extends Model
 {
     use HasFactory;
 
-    /**
+
+
+      /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'achats';
+    protected $table = 'assurances';
 
     /**
      * The primary key for the model.
@@ -30,14 +32,10 @@ class Achat extends Model
      * @var array
      */
     protected $fillable = [
-        'achat_prix',
-        'devise',
-        'achat_date',
-        'nip_acheteur',
-        'nom_vendeur',
-        'telephone_vendeur',
-        'email_vendeur',
-        'adresse_vendeur',
+        'numero_police',
+        'nom_assureur',
+        'date_validite',
+        'type_assurance_id',
         'vehicule_id',
         'vehicule_npi',
     ];
@@ -60,7 +58,6 @@ class Achat extends Model
     protected $casts = [
         'created_at'=>'datetime:d/m/Y H:i',
         'updated_at'=>'datetime:d/m/Y H:i',
-        'achat_date'=>'datetime:d/m/Y',
     ];
 
     /**
@@ -71,7 +68,10 @@ class Achat extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'achat_date',
     ];
 
+
+    public function vehicule():BelongsTo{
+        return $this->belongsTo(Vehicule::class, foreignKey:'vehicule_id');
+    }
 }
