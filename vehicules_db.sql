@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 13 juin 2024 à 05:18
+-- Généré le : mer. 19 juin 2024 à 01:24
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -30,25 +30,37 @@ SET time_zone = "+00:00";
 CREATE TABLE `achats` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `achat_prix` varchar(255) NOT NULL,
+  `devise` varchar(255) NOT NULL DEFAULT 'CDF',
   `achat_date` timestamp NULL DEFAULT NULL,
   `nip_acheteur` varchar(255) NOT NULL,
-  `nip_vendeur` varchar(255) NOT NULL,
+  `nom_vendeur` varchar(255) NOT NULL,
+  `telephone_vendeur` varchar(255) NOT NULL,
+  `email_vendeur` varchar(255) DEFAULT NULL,
+  `adresse_vendeur` varchar(255) NOT NULL,
   `vehicule_id` bigint(20) UNSIGNED NOT NULL,
+  `vehicule_npi` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'actif',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `achats`
+-- Structure de la table `assurances`
 --
 
-INSERT INTO `achats` (`id`, `achat_prix`, `achat_date`, `nip_acheteur`, `nip_vendeur`, `vehicule_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, '2000', '2024-06-28 23:00:00', 'I299290', '298292', 1, 'actif', '2024-06-13 01:34:56', '2024-06-13 01:34:56'),
-(2, '2000', '2024-06-27 23:00:00', 'SJHSH28', 'ZYU28728', 2, 'actif', '2024-06-13 01:55:29', '2024-06-13 01:55:29'),
-(3, '2000', '2024-06-28 23:00:00', '938209', '8374ZJHJHZ', 3, 'actif', '2024-06-13 02:03:49', '2024-06-13 02:03:49'),
-(4, '2800', '2024-06-26 23:00:00', 'KZJZKZJJZ', '299292IZ', 4, 'actif', '2024-06-13 02:07:25', '2024-06-13 02:07:25'),
-(5, '72837093', '2024-06-26 23:00:00', '9EIJDKDJ', '2983392', 5, 'actif', '2024-06-13 02:10:51', '2024-06-13 02:10:51');
+CREATE TABLE `assurances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `numero_police` varchar(255) NOT NULL,
+  `nom_assureur` varchar(255) NOT NULL,
+  `date_validite` timestamp NULL DEFAULT NULL,
+  `type_assurance_id` bigint(20) UNSIGNED NOT NULL,
+  `vehicule_id` bigint(20) UNSIGNED NOT NULL,
+  `vehicule_npi` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -65,6 +77,132 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `marques`
+--
+
+CREATE TABLE `marques` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `marque_libelle` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `marques`
+--
+
+INSERT INTO `marques` (`id`, `marque_libelle`, `created_at`, `updated_at`) VALUES
+(1, 'Abarth', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(2, 'Acura', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(3, 'Alfa Romeo', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(4, 'Aston Martin', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(5, 'Audi', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(6, 'Bentley', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(7, 'BMW', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(8, 'Bugatti', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(9, 'Buick', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(10, 'Cadillac', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(11, 'Chevrolet', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(12, 'Chrysler', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(13, 'Citroën', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(14, 'Dacia', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(15, 'Daewoo', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(16, 'Daihatsu', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(17, 'Dodge', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(18, 'Ferrari', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(19, 'Fiat', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(20, 'Ford', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(21, 'Genesis', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(22, 'GMC', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(23, 'Honda', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(24, 'Hyundai', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(25, 'Infiniti', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(26, 'Isuzu', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(27, 'Jaguar', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(28, 'Jeep', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(29, 'Kia', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(30, 'Koenigsegg', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(31, 'Lamborghini', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(32, 'Lancia', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(33, 'Land Rover', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(34, 'Lexus', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(35, 'Lincoln', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(36, 'Lotus', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(37, 'Maserati', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(38, 'Mazda', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(39, 'McLaren', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(40, 'Mercedes-Benz', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(41, 'Mini', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(42, 'Mitsubishi', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(43, 'Nissan', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(44, 'Pagani', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(45, 'Peugeot', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(46, 'Porsche', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(47, 'Ram', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(48, 'Renault', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(49, 'Rolls-Royce', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(50, 'Saab', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(51, 'Subaru', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(52, 'Suzuki', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(53, 'Tesla', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(54, 'Toyota', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(55, 'Volkswagen', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(56, 'Volvo', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(57, 'Alpina', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(58, 'Apollo', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(59, 'Arrinera', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(60, 'Ascari', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(61, 'Baojun', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(62, 'Bollinger', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(63, 'Borgward', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(64, 'Brilliance', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(65, 'BYD', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(66, 'Caterham', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(67, 'Changan', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(68, 'Chery', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(69, 'De Tomaso', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(70, 'DMC', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(71, 'DS Automobiles', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(72, 'Faraday Future', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(73, 'Fisker', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(74, 'Geely', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(75, 'Ginetta', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(76, 'Great Wall', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(77, 'Haval', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(78, 'Hennessey', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(79, 'Hispano Suiza', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(80, 'Hongqi', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(81, 'Hummer', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(82, 'JAC', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(83, 'Karma', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(84, 'Lucid', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(85, 'Mahindra', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(86, 'Marussia', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(87, 'MG', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(88, 'Nio', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(89, 'Opel', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(90, 'Perodua', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(91, 'Proton', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(92, 'Qoros', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(93, 'Rimac', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(94, 'Rivian', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(95, 'Roewe', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(96, 'SEAT', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(97, 'SRT', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(98, 'SSC North America', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(99, 'Tata', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(100, 'Troller', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(101, 'Vauxhall', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(102, 'Venucia', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(103, 'VinFast', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(104, 'Wiesmann', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(105, 'Wuling', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(106, 'XPeng', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(107, 'Zotye', '2024-06-18 22:22:45', '2024-06-18 22:22:45');
 
 -- --------------------------------------------------------
 
@@ -88,59 +226,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2024_06_11_183012_create_achats_table', 1),
-(6, '2024_06_11_184044_create_modeles_table', 1),
-(7, '2024_06_11_184253_create_vehicule_types_table', 1),
-(8, '2024_06_11_185254_create_proprietaires_table', 1),
-(9, '2024_06_11_185532_create_vehicules_table', 1);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `modeles`
---
-
-CREATE TABLE `modeles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `modele_libelle` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'actif',
-  `vehicule_type_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `modeles`
---
-
-INSERT INTO `modeles` (`id`, `modele_libelle`, `status`, `vehicule_type_id`, `created_at`, `updated_at`) VALUES
-(1, 'Toyota', 'actif', 1, NULL, NULL),
-(2, 'Honda', 'actif', 1, NULL, NULL),
-(3, 'Ford', 'actif', 1, NULL, NULL),
-(4, 'Chevrolet', 'actif', 1, NULL, NULL),
-(5, 'Nissan', 'actif', 1, NULL, NULL),
-(6, 'Toyota', 'actif', 2, NULL, NULL),
-(7, 'Honda', 'actif', 2, NULL, NULL),
-(8, 'Tesla', 'actif', 2, NULL, NULL),
-(9, 'BMW', 'actif', 2, NULL, NULL),
-(10, 'Mercedes-Benz', 'actif', 2, NULL, NULL),
-(11, 'Ford', 'actif', 3, NULL, NULL),
-(12, 'Chevrolet', 'actif', 3, NULL, NULL),
-(13, 'Ram', 'actif', 3, NULL, NULL),
-(14, 'GMC', 'actif', 3, NULL, NULL),
-(15, 'Toyota', 'actif', 3, NULL, NULL),
-(16, 'Ford', 'actif', 4, NULL, NULL),
-(17, 'Chevrolet', 'actif', 4, NULL, NULL),
-(18, 'BMW', 'actif', 4, NULL, NULL),
-(19, 'Audi', 'actif', 4, NULL, NULL),
-(20, 'Mercedes-Benz', 'actif', 4, NULL, NULL),
-(21, 'Mazda', 'actif', 5, NULL, NULL),
-(22, 'BMW', 'actif', 5, NULL, NULL),
-(23, 'Porsche', 'actif', 5, NULL, NULL),
-(24, 'Audi', 'actif', 5, NULL, NULL),
-(25, 'Mercedes-Benz', 'actif', 5, NULL, NULL),
-(26, 'Volvo', 'actif', 6, NULL, NULL),
-(27, 'Subaru', 'actif', 6, NULL, NULL),
-(28, 'Audi', 'actif', 6, NULL, NULL);
+(6, '2024_06_11_184253_create_vehicule_types_table', 1),
+(7, '2024_06_11_185254_create_proprietaires_table', 1),
+(8, '2024_06_11_185532_create_vehicules_table', 1),
+(9, '2024_06_18_131549_create_marques_table', 1),
+(10, '2024_06_18_152024_create_assurances_table', 1),
+(11, '2024_06_18_152050_create_type_assurances_table', 1);
 
 -- --------------------------------------------------------
 
@@ -188,16 +279,34 @@ CREATE TABLE `proprietaires` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `proprietaires`
+-- Structure de la table `type_assurances`
 --
 
-INSERT INTO `proprietaires` (`id`, `nip_proprietaire`, `nip_chauffeur`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'I299290', 'ZUUIEIZU', 'actif', '2024-06-13 01:34:56', '2024-06-13 01:34:56'),
-(2, 'SJHSH28', '3838484I3U', 'actif', '2024-06-13 01:55:29', '2024-06-13 01:55:29'),
-(3, '938209', '2939EHDD', 'actif', '2024-06-13 02:03:49', '2024-06-13 02:03:49'),
-(4, 'KZJZKZJJZ', 'SKSJ2922', 'actif', '2024-06-13 02:07:25', '2024-06-13 02:07:25'),
-(5, '9EIJDKDJ', '23033039', 'actif', '2024-06-13 02:10:51', '2024-06-13 02:10:51');
+CREATE TABLE `type_assurances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type_assurance_libelle` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `type_assurances`
+--
+
+INSERT INTO `type_assurances` (`id`, `type_assurance_libelle`, `created_at`, `updated_at`) VALUES
+(1, 'Assurance automobile', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(2, 'Assurance moto', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(3, 'Assurance camion', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(4, 'Assurance véhicule de loisirs', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(5, 'Assurance flotte automobile', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(6, 'Assurance taxi ou VTC', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(7, 'Assurance transport de marchandises', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(8, 'Assurance engins agricoles ou de chantier', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(9, 'Assurance véhicules de collection', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(10, 'Assurance véhicules électriques ou hybrides', '2024-06-18 22:22:45', '2024-06-18 22:22:45');
 
 -- --------------------------------------------------------
 
@@ -221,9 +330,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Gaston Delimond', 'gastondelimond@gmail.com', NULL, '$2y$10$kVHDExAMBChBprGdJjP5r.m1QmIvNKVvTV9p76Bg4xE6RbfCiUzLC', NULL, NULL, NULL),
-(2, 'Lionnel Nawej', 'lionnelnawej@gmail.com', NULL, '$2y$10$CyJVwNbdnbld5SqK5MeN7.kBkC5UomDtrvgQzzTZdVvy05HxouQ26', NULL, NULL, NULL),
-(3, 'Admin', 'admin@gmail.com', NULL, '$2y$10$bSWuHKYY4STB3HgzQ3WvfecA3p5vySFEZ71YjAXrCrXV91AM4AL82', NULL, NULL, NULL);
+(1, 'Gaston Delimond', 'gastondelimond@gmail.com', NULL, '$2y$10$QRyT5AUX7n3U8m6Q0B31sOZjAQ/.UXH2VyzUxGx/dmrg1lmvsUNrS', NULL, NULL, NULL),
+(2, 'Lionnel Nawej', 'lionnelnawej@gmail.com', NULL, '$2y$10$vz92qNIJ4PTWW1heanvL1ODrhlwMd./BUWD0rFTBPPSaU6WvJP/Z2', NULL, NULL, NULL),
+(3, 'Admin', 'admin@gmail.com', NULL, '$2y$10$APt5HkpgYIkkrUlXqPQofu6UEAkPwFFJm2qkmxjam3A00SMRDdGvu', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,7 +347,7 @@ CREATE TABLE `vehicules` (
   `plaque` varchar(255) NOT NULL,
   `couleur` varchar(255) NOT NULL,
   `chassis` varchar(255) NOT NULL,
-  `marque` varchar(255) NOT NULL,
+  `modele` varchar(255) NOT NULL,
   `photo_avant` varchar(255) NOT NULL,
   `photo_arriere` varchar(255) NOT NULL,
   `profil_droit` varchar(255) NOT NULL,
@@ -249,23 +358,12 @@ CREATE TABLE `vehicules` (
   `police_assurance` varchar(255) DEFAULT NULL,
   `type_usage` varchar(255) NOT NULL,
   `vehicule_type_id` bigint(20) UNSIGNED NOT NULL,
-  `modele_id` bigint(20) UNSIGNED NOT NULL,
+  `marque_id` bigint(20) UNSIGNED NOT NULL,
   `proprietaire_id` bigint(20) UNSIGNED NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'actif',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `vehicules`
---
-
-INSERT INTO `vehicules` (`id`, `code`, `serie`, `plaque`, `couleur`, `chassis`, `marque`, `photo_avant`, `photo_arriere`, `profil_droit`, `profil_gauche`, `nbre_chevaux`, `date_debut_service`, `validite_assurance`, `police_assurance`, `type_usage`, `vehicule_type_id`, `modele_id`, `proprietaire_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'DK17177220', '29839329', '29839292', '#d783ff', '29289383', '838292', 'http://127.0.0.1:8000/uploads/vehicules/666a5ad0ccc06.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5ad0cdaf8.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5ad0cdbe4.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5ad0cdb7f.png', '2', '2024-06-30', '2025-02-18', 'U2I2UI2UI2', 'Taxi', 5, 17, 1, 'actif', '2024-06-13 01:34:56', '2024-06-13 01:34:56'),
-(2, '8145875969', '872HHS', 'SHHE782', '#000000', '2873HSHS', '838YHSHS', 'http://127.0.0.1:8000/uploads/vehicules/666a5fa19256e.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5fa19274d.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5fa192805.png', 'http://127.0.0.1:8000/uploads/vehicules/666a5fa1927b3.png', '3', '2024-06-21', '2024-06-28', '8378SHSHS', 'Taxi', 2, 19, 2, 'actif', '2024-06-13 01:55:29', '2024-06-13 01:55:29'),
-(3, 'O655337623', 'DJDJHD', 'SSJSJS', '#7980ff', 'DJHDDH', '92JSJJSHSJ', 'http://127.0.0.1:8000/uploads/vehicules/666a6195af4d0.png', 'http://127.0.0.1:8000/uploads/vehicules/666a6195af5ed.png', 'http://127.0.0.1:8000/uploads/vehicules/666a6195af6ac.png', 'http://127.0.0.1:8000/uploads/vehicules/666a6195af651.png', '2', '2024-06-14', NULL, NULL, 'Personnel', 3, 21, 3, 'actif', '2024-06-13 02:03:49', '2024-06-13 02:03:49'),
-(4, 'TL32902226', 'KSJKS', 'KSJSKJS', '#00fcff', 'KLSSKSLS', '82782289HDH', 'http://127.0.0.1:8000/uploads/vehicules/666a626dda044.png', 'http://127.0.0.1:8000/uploads/vehicules/666a626dda2a8.png', 'http://127.0.0.1:8000/uploads/vehicules/666a626dda357.png', 'http://127.0.0.1:8000/uploads/vehicules/666a626dda307.png', '3', '2024-06-28', '2024-06-30', 'OIOI2O2O1', 'Personnel', 4, 19, 4, 'actif', '2024-06-13 02:07:25', '2024-06-13 02:07:25'),
-(5, 'PM87866232', 'O93930039', 'ODIDOID', '#9437ff', 'I3I9392', '383873', 'http://127.0.0.1:8000/uploads/vehicules/666a633b97897.png', 'http://127.0.0.1:8000/uploads/vehicules/666a633b97a3f.png', 'http://127.0.0.1:8000/uploads/vehicules/666a633b97afc.png', 'http://127.0.0.1:8000/uploads/vehicules/666a633b97aa6.png', '2', '2024-06-28', '2024-09-29', 'ZIIDJDJHDJ', 'Personnel', 4, 19, 5, 'actif', '2024-06-13 02:10:51', '2024-06-13 02:10:51');
 
 -- --------------------------------------------------------
 
@@ -286,15 +384,15 @@ CREATE TABLE `vehicule_types` (
 --
 
 INSERT INTO `vehicule_types` (`id`, `vehicule_type_libelle`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'SUV', 'actif', NULL, NULL),
-(2, 'Berline', 'actif', NULL, NULL),
-(3, 'Camion', 'actif', NULL, NULL),
-(4, 'Coupé', 'actif', NULL, NULL),
-(5, 'Cabriolet', 'actif', NULL, NULL),
-(6, 'Break', 'actif', NULL, NULL),
-(7, 'Monospace', 'actif', NULL, NULL),
-(8, 'Pick-up', 'actif', NULL, NULL),
-(9, 'Van', 'actif', NULL, NULL);
+(1, 'SUV', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(2, 'Berline', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(3, 'Camion', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(4, 'Coupé', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(5, 'Cabriolet', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(6, 'Break', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(7, 'Monospace', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(8, 'Pick-up', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45'),
+(9, 'Van', 'actif', '2024-06-18 22:22:45', '2024-06-18 22:22:45');
 
 --
 -- Index pour les tables déchargées
@@ -307,6 +405,12 @@ ALTER TABLE `achats`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `assurances`
+--
+ALTER TABLE `assurances`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -314,15 +418,15 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Index pour la table `migrations`
+-- Index pour la table `marques`
 --
-ALTER TABLE `migrations`
+ALTER TABLE `marques`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `modeles`
+-- Index pour la table `migrations`
 --
-ALTER TABLE `modeles`
+ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -343,6 +447,12 @@ ALTER TABLE `personal_access_tokens`
 -- Index pour la table `proprietaires`
 --
 ALTER TABLE `proprietaires`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `type_assurances`
+--
+ALTER TABLE `type_assurances`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -372,7 +482,13 @@ ALTER TABLE `vehicule_types`
 -- AUTO_INCREMENT pour la table `achats`
 --
 ALTER TABLE `achats`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `assurances`
+--
+ALTER TABLE `assurances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `failed_jobs`
@@ -381,16 +497,16 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `marques`
+--
+ALTER TABLE `marques`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+
+--
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT pour la table `modeles`
---
-ALTER TABLE `modeles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `personal_access_tokens`
@@ -402,7 +518,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT pour la table `proprietaires`
 --
 ALTER TABLE `proprietaires`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `type_assurances`
+--
+ALTER TABLE `type_assurances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `users`
@@ -414,7 +536,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `vehicule_types`

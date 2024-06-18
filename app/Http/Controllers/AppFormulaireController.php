@@ -26,7 +26,7 @@ class AppFormulaireController extends Controller
     {
         // Validation des données
         $validator = Validator::make($request->all(), [
-            'serie' => 'required|string|unique:vehicules,serie',
+            'serie' => 'required|string',
             'plaque' => 'required|string|unique:vehicules,plaque',
             'marque_id' => 'required|int|exists:marques,id',
             'chassis' => 'required|string',
@@ -71,7 +71,7 @@ class AppFormulaireController extends Controller
         }
         //Verifie le NPI du chauffeur
         $isChauffeurNPIInvalid = $this->nPIService->checkNpi($validatedData['proprietaire']['nip_chauffeur']);
-        if ($isChauffeurNPIInvalid) {
+        if (!$isChauffeurNPIInvalid) {
             return response()->json([
                 "error"=>"NPI du chauffeur invalide !"
             ]);
