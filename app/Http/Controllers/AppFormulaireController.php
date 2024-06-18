@@ -11,11 +11,17 @@ use App\Models\Proprietaire;
 use App\Models\TypeAssurance;
 use App\Models\Vehicule;
 use App\Models\VehiculeType;
+use App\Services\NPIService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AppFormulaireController extends Controller
 {
+    protected NPIService $nPIService;
+
+    public function __construct(NPIService $nPIService){
+        $this->nPIService = $nPIService;
+    }
     public function store(Request $request)
     {
         // Validation des données
@@ -30,7 +36,7 @@ class AppFormulaireController extends Controller
             'profil_droit' => 'required|file',
             'profil_gauche' => 'required|file',
             'nbre_chevaux' => 'required|string',
-            'date_debut_service' => 'required|date',
+            'date_debut_service' => 'required|date|before_or_equal:now',
             'assurances'=> 'nullable|array',
             'assurances.*.numero_police'=> 'required|string',
             'assurances.*.nom_assureur'=> 'required|string',
@@ -43,7 +49,7 @@ class AppFormulaireController extends Controller
             'proprietaire.nip_chauffeur' => 'required|string',
             'achat.achat_prix' => 'required|string',
             'achat.devise' => 'required|string',
-            'achat.achat_date' => 'required|date',
+            'achat.achat_date' => 'required|date|before_or_equal:now',
             'achat.nom_vendeur' => 'required|string',
             'achat.telephone_vendeur' => 'required|string',
             'achat.email_vendeur' => 'nullable|email',
@@ -56,6 +62,20 @@ class AppFormulaireController extends Controller
             ]);
         }
         $validatedData = $validator->validate();
+        //Verifie le NPI proprietaire
+        $isNPIvalid = $this->nPIService->checkNpi($validatedData['proprietaire']['nip_proprietaire']);
+        if (!$isNPIvalid) {
+            return response()->json([
+                "error"=>"NPI proprietaire invalide !"
+            ]);
+        }
+        //Verifie le NPI du chauffeur
+        $isChauffeurNPIInvalid = $this->nPIService->checkNpi($validatedData['proprietaire']['nip_chauffeur']);
+        if ($isChauffeurNPIInvalid) {
+            return response()->json([
+                "error"=>"NPI du chauffeur invalide !"
+            ]);
+        }
         //create proprietaire
         $proprietaireData = $validatedData['proprietaire'];
         $proprietaire = Proprietaire::create($proprietaireData);

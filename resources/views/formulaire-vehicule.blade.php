@@ -193,7 +193,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="nipchauffeur">Nip chauffeur*</label>
+                                            <label for="nipchauffeur">NPI du chauffeur*</label>
                                             <input type="text" class="form-control" id="npiChauffeur" name="proprietaire[nip_chauffeur]" placeholder="Entrez le nip du chauffeur" required>
                                         </div>
                                     </div>
