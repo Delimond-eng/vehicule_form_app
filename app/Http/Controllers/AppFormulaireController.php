@@ -92,7 +92,7 @@ class AppFormulaireController extends Controller
             $validatedData['profil_droit'] = $photoDroit;
             $validatedData['profil_gauche'] = $photoGauche;
             $validatedData['proprietaire_id'] = $proprietaire->id;
-            $validatedData ['code'] = Vehicule::generateUniqueCode();
+            $validatedData ['code'] = Vehicule::generateUniqueCode($validatedData["type_usage"]);
 
             $vehicule = Vehicule::create($validatedData);
             // Create achat info

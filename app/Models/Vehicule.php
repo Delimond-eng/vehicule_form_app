@@ -88,14 +88,14 @@ class Vehicule extends Model
      *
      * @return string
      */
-    public static function generateUniqueCode()
+    public static function generateUniqueCode($type)
     {
+        $identifier = $type==="Personnel" ? "VC" : "TR";
        do {
-            $letters = strtoupper(Str::random(2));
-            $digits = rand(10000000, 99999999);
-            $code = $letters . $digits;
+            $letters = strtoupper(Str::random($identifier==="VC" ? 3 : 2));
+            $digits = $identifier==="VC" ? rand(100, 999) : rand(1000, 9999);
+            $code = "KN-".$identifier."-" . $digits."-".$letters;
         } while (self::where('code', $code)->exists());
-
         return $code;
     }
 
