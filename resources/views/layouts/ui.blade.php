@@ -136,7 +136,7 @@
                                 <!-- Start::slide -->
                                 <li class="slide">
                                     <a href="#candidate" class="side-menu__item">
-                                        <span class="side-menu__label">Vehicules</span>
+                                        <span class="side-menu__label">Personnes</span>
                                     </a>
                                 </li>
                                 <!-- End::slide -->
