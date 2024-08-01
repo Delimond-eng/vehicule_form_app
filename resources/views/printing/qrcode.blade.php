@@ -24,7 +24,7 @@
             color: #000000;
             text-align: center;
             font-family: 'Poppins';
-            font-size: 85px;
+            font-size: 2em;
             fond-weight: bold;
         }
     </style>
@@ -35,14 +35,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const code = "{{ $code }}";
+            const code = "{{ $qrcode_data }}";
             const qrCode = new QRCodeStyling({
                 width: 600,
                 height: 600,
                 data: code,
-                image: "{{ asset('assets/img/drc.svg') }}",
+                image: "{{ asset('assets2/images/flag.png') }}",
                 dotsOptions: {
-                    color: "#0080ff",
+                    color: "#01070E",
                     type: "rounded"
                 },
                 backgroundOptions: {

@@ -133,7 +133,7 @@ class AppFormulaireController extends Controller
         $brands = Marque::all();
         $vehiculeTypes = VehiculeType::where('status','actif')->get();
         $assuranceTypes = TypeAssurance::all();
-        return view('formulaire-vehicule', [
+        return view('forms', [
             'vehiculeTypes'=> $vehiculeTypes,
             'typeAssurances'=> $assuranceTypes,
             'marques'=> $brands,
