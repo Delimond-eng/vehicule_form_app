@@ -173,7 +173,7 @@
                                     <div class="p-5 checkout-payment-success my-3">
                                         <p class="mb-1 fw-semibold text-muted op-5 fs-20">03</p>
                                         <div class="mb-5">
-                                            <h5 class="text-primary fw-semibold">Capturez la photo</h5>
+                                            <h5 class="text-primary fw-semibold">Capturez les photos</h5>
                                         </div>
                                         <div class="mb-5">
                                             <div class="row d-flexn justify-content-center align-items-center">

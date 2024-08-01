@@ -6,8 +6,7 @@
         <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
             <div class="my-2 d-flex justify-content-center">
                 <a href="javascript:void(0)">
-                      <img src="{{ asset('assets/img/logo-v1.png') }}" alt="">
-                    {{--  <h1 class="text-primary text-center fs-25 desktop-logo fw-bold">Formulaire <span class="text-dark">d'Ident. des motos</span></h1>  --}}
+                    <h1 class="text-primary text-center fs-25 desktop-logo fw-bold">Formulaire <span class="text-dark">d'Ident. des véhicules</span></h1>
                 </a>
             </div>
             <div class="card custom-card">
